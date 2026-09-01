@@ -21,7 +21,7 @@ Après la première connexion, ce compte pourra créer les autres utilisateurs d
 
 ## 3. Déployer sur Vercel
 
-1. Placez ce dossier dans un dépôt GitHub privé.
+1. Placez le contenu de ce dossier à la racine d’un dépôt GitHub privé. Les dossiers `api/` et le fichier `package.json` doivent être au même niveau que `index.html`. Si le dossier reste imbriqué dans le dépôt, renseignez ce nom de dossier dans **Vercel > Settings > General > Root Directory**.
 2. Importez le dépôt dans Vercel.
 3. Dans **Settings > Environment Variables**, créez : `SUPABASE_URL`, `SUPABASE_ANON_KEY` et `SUPABASE_SERVICE_ROLE_KEY` avec les valeurs Supabase.
 4. Lancez le déploiement.

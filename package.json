@@ -2,6 +2,7 @@
   "name": "cesame-finances",
   "private": true,
   "version": "1.0.0",
+  "engines": { "node": "20.x" },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.0"
   }

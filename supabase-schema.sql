@@ -10,7 +10,7 @@ create table if not exists public.profiles (
 
 create table if not exists public.app_state (
   id smallint primary key check (id = 1),
-  document jsonb not null default '{"incomes":[],"expenses":[],"planned":[],"teachers":[],"audit":[]}'::jsonb,
+  document jsonb not null default '{"incomes":[],"expenses":[],"planned":[],"teachers":[],"requests":[],"audit":[]}'::jsonb,
   updated_at timestamptz not null default now(),
   updated_by uuid references auth.users(id)
 );

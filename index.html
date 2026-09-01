@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="logo.css" />
+    <link rel="stylesheet" href="mobile.css" />
   </head>
   <body>
     <div id="loginView" class="login-shell">
@@ -41,6 +42,7 @@
           <button class="nav-link active" data-page="dashboard"><span>▦</span> Tableau de bord</button>
           <button class="nav-link" data-page="incomes"><span>↓</span> Entrées</button>
           <button class="nav-link" data-page="expenses"><span>↑</span> Sorties</button>
+          <button id="requestsNav" class="nav-link"><span>✓</span> Demandes de dépenses <b id="requestsBadge"></b></button>
           <button class="nav-link" data-page="planned"><span>◷</span> Dépenses planifiées <b id="plannedBadge"></b></button>
           <button class="nav-link" data-page="teachers"><span>♙</span> Formateurs</button>
           <button class="nav-link" data-page="reports"><span>▤</span> Rapports</button>
@@ -50,8 +52,9 @@
         <div class="sidebar-footer"><div class="avatar">PM</div><div><strong id="sidebarName">Paul Mbarga</strong><small id="sidebarRole">Promoteur</small></div><button id="logout" title="Déconnexion">↪</button></div>
       </aside>
 
+      <div id="menuBackdrop" class="menu-backdrop hidden"></div>
       <main>
-        <header><div><p id="pageKicker" class="eyebrow green">VUE D'ENSEMBLE</p><h1 id="pageTitle">Bonjour, Paul 👋</h1></div><div class="header-actions"><button id="notificationBtn" class="icon-btn">♧<i id="notificationDot"></i></button><button id="quickAdd" class="primary">+ Nouvelle opération</button></div></header>
+        <header><div class="header-title"><button id="mobileMenu" class="mobile-menu" aria-label="Ouvrir le menu" aria-expanded="false">☰</button><div><p id="pageKicker" class="eyebrow green">VUE D'ENSEMBLE</p><h1 id="pageTitle">Bonjour, Paul 👋</h1></div></div><div class="header-actions"><button id="notificationBtn" class="icon-btn">♧<i id="notificationDot"></i></button><button id="quickAdd" class="primary">+ Nouvelle opération</button></div></header>
         <div id="alertBanner" class="alert-banner hidden"></div>
 
         <section id="dashboard" class="page active">
@@ -71,6 +74,7 @@
         <section id="incomes" class="page"><div class="page-toolbar"><div><h2>Entrées</h2><p>Suivez tous les encaissements du centre.</p></div><button class="primary create" data-type="income">+ Enregistrer une entrée</button></div><div class="panel table-panel"><div class="filters"><input id="incomeSearch" placeholder="Rechercher une opération…" /><select id="incomeFilter"><option value="all">Toutes les catégories</option></select></div><div class="table-wrap"><table><thead><tr><th>RÉFÉRENCE</th><th>LIBELLÉ</th><th>CATÉGORIE</th><th>DATE</th><th>MODE</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="incomeTable"></tbody></table></div></div></section>
 
         <section id="expenses" class="page"><div class="page-toolbar"><div><h2>Sorties</h2><p>Dépenses payées et en attente de validation.</p></div><button class="primary create" data-type="expense">+ Enregistrer une sortie</button></div><div class="panel table-panel"><div class="filters"><input id="expenseSearch" placeholder="Rechercher une dépense…" /><select id="expenseStatus"><option value="all">Tous les statuts</option><option value="payée">Payée</option><option value="à valider">À valider</option><option value="rejetée">Rejetée</option></select></div><div class="table-wrap"><table><thead><tr><th>DÉPENSE</th><th>CATÉGORIE</th><th>DATE</th><th>STATUT</th><th>VALIDÉE PAR</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="expenseTable"></tbody></table></div></div></section>
+        <section id="requests" class="page"><div class="page-toolbar"><div><h2>Demandes de dépenses</h2><p>Demandes à examiner avant qu’elles deviennent une sortie.</p></div><button id="createRequest" class="primary">+ Nouvelle demande</button></div><div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>DEMANDE</th><th>CATÉGORIE</th><th>DEMANDÉE PAR</th><th>DATE</th><th>STATUT</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="requestsTable"></tbody></table></div></div></section>
 
         <section id="planned" class="page"><div class="page-toolbar"><div><h2>Dépenses planifiées</h2><p>Anticipez les charges et ne ratez aucune échéance.</p></div><button class="primary create" data-type="planned">+ Planifier une dépense</button></div><div id="plannedCards" class="planned-grid"></div></section>
 
@@ -89,7 +93,9 @@
     <script src="cloud.js"></script>
     <script src="admin.js"></script>
     <script src="admin-fix.js"></script>
-    <script src="sync-fix.js"></script>
     <script src="operations-fix.js"></script>
+    <script src="direct-expense-fix.js"></script>
+    <script src="requests.js"></script>
+    <script src="mobile.js"></script>
   </body>
 </html>

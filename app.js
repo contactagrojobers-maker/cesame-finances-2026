@@ -33,7 +33,7 @@ const seed = {
 };
 let data = JSON.parse(localStorage.getItem(STORAGE)) || structuredClone(seed);
 let currentType = 'income';
-const can = (action) => ({ Promoteur:['all'], Directeur:['all'], Scolarité:['income','planned'] }[data.user.role].includes('all') || ({ income:'income', planned:'planned', teacher:'none', expense:'expense' }[action] && ({ Promoteur:['all'], Directeur:['all'], Scolarité:['income','planned'] }[data.user.role].includes(action))));
+const can = () => Boolean(data.user && data.user.role);
 const money = n => new Intl.NumberFormat('fr-FR').format(n || 0) + ' FCFA';
 const save = () => localStorage.setItem(STORAGE, JSON.stringify(data));
 const date = s => new Intl.DateTimeFormat('fr-FR',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(s+'T12:00:00'));
@@ -46,6 +46,7 @@ function renderAll(){
   const t=totals(), due=data.planned.filter(x=>x.status!=='payée'), upcoming=due.filter(x=>new Date(x.due+'T12')<=new Date('2026-09-08T12')).reduce((a,x)=>a+x.amount,0), overdue=due.filter(x=>x.status==='en retard').length;
   document.querySelector('#balance').textContent=money(t.income-t.expense); document.querySelector('#monthIncome').textContent=money(t.income);document.querySelector('#monthExpense').textContent=money(t.expense);document.querySelector('#upcomingTotal').textContent=money(upcoming);document.querySelector('#overdueText').textContent=overdue?`${overdue} dépense en retard`: 'Aucun retard';document.querySelector('#plannedBadge').textContent=due.length;
   document.querySelector('#sidebarName').textContent=data.user.name; document.querySelector('#sidebarRole').textContent=data.user.role;
+  if(document.querySelector('#dashboard').classList.contains('active'))document.querySelector('#pageTitle').textContent=`Bonjour, ${data.user.name.split(' ')[0]} !`;
   renderDashboard(due);renderTables();renderPlanned();renderTeachers();renderReports();renderAudit();renderAccess();
 }
 function renderDashboard(due){

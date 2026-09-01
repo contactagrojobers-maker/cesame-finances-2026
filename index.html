@@ -68,7 +68,7 @@
           <article class="panel recent-panel"><div class="panel-head"><div><h3>Dernières opérations</h3><p>Encaissements et décaissements récents</p></div><button class="text-btn" data-go="incomes">Voir tout</button></div><div class="table-wrap"><table><thead><tr><th>OPÉRATION</th><th>CATÉGORIE</th><th>DATE</th><th>STATUT</th><th class="right">MONTANT</th></tr></thead><tbody id="recentTable"></tbody></table></div></article>
         </section>
 
-        <section id="incomes" class="page"><div class="page-toolbar"><div><h2>Entrées</h2><p>Suivez tous les encaissements du centre.</p></div><button class="primary create" data-type="income">+ Enregistrer une entrée</button></div><div class="panel table-panel"><div class="filters"><input id="incomeSearch" placeholder="Rechercher une opération…" /><select id="incomeFilter"><option value="all">Toutes les catégories</option></select></div><div class="table-wrap"><table><thead><tr><th>RÉFÉRENCE</th><th>LIBELLÉ</th><th>CATÉGORIE</th><th>DATE</th><th>MODE</th><th class="right">MONTANT</th></tr></thead><tbody id="incomeTable"></tbody></table></div></div></section>
+        <section id="incomes" class="page"><div class="page-toolbar"><div><h2>Entrées</h2><p>Suivez tous les encaissements du centre.</p></div><button class="primary create" data-type="income">+ Enregistrer une entrée</button></div><div class="panel table-panel"><div class="filters"><input id="incomeSearch" placeholder="Rechercher une opération…" /><select id="incomeFilter"><option value="all">Toutes les catégories</option></select></div><div class="table-wrap"><table><thead><tr><th>RÉFÉRENCE</th><th>LIBELLÉ</th><th>CATÉGORIE</th><th>DATE</th><th>MODE</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="incomeTable"></tbody></table></div></div></section>
 
         <section id="expenses" class="page"><div class="page-toolbar"><div><h2>Sorties</h2><p>Dépenses payées et en attente de validation.</p></div><button class="primary create" data-type="expense">+ Enregistrer une sortie</button></div><div class="panel table-panel"><div class="filters"><input id="expenseSearch" placeholder="Rechercher une dépense…" /><select id="expenseStatus"><option value="all">Tous les statuts</option><option value="payée">Payée</option><option value="à valider">À valider</option><option value="rejetée">Rejetée</option></select></div><div class="table-wrap"><table><thead><tr><th>DÉPENSE</th><th>CATÉGORIE</th><th>DATE</th><th>STATUT</th><th>VALIDÉE PAR</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="expenseTable"></tbody></table></div></div></section>
 
@@ -88,5 +88,8 @@
     <script src="app.js"></script>
     <script src="cloud.js"></script>
     <script src="admin.js"></script>
+    <script src="admin-fix.js"></script>
+    <script src="sync-fix.js"></script>
+    <script src="operations-fix.js"></script>
   </body>
 </html>

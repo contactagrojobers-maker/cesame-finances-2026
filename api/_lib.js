@@ -1,6 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 const NodeWebSocket = require('ws');
-const emptyState = { incomes: [], expenses: [], planned: [], teachers: [], requests: [], audit: [] };
+const emptyState = { incomes: [], expenses: [], planned: [], teachers: [], requests: [], audit: [], permanentStaff: [] };
 
 function config() {
   const { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY } = process.env;

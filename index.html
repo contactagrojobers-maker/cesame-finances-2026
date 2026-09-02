@@ -50,6 +50,7 @@
           <button id="requestsNav" class="nav-link"><span>✓</span> Demandes de dépenses <b id="requestsBadge"></b></button>
           <button class="nav-link" data-page="planned"><span>◷</span> Dépenses planifiées <b id="plannedBadge"></b></button>
           <button class="nav-link" data-page="teachers"><span>♙</span> Formateurs</button>
+          <button id="permanentStaffNav" class="nav-link hidden" data-page="permanent-staff"><span>♟</span> Personnel permanent</button>
           <button class="nav-link" data-page="reports"><span>▤</span> Rapports</button>
           <button class="nav-link" data-page="audit"><span>◫</span> Historique</button>
           <button class="nav-link" data-page="account"><span>◉</span> Mon compte</button>
@@ -86,6 +87,7 @@
         <section id="planned" class="page"><div class="page-toolbar"><div><h2>Dépenses planifiées</h2><p>Anticipez les charges et ne ratez aucune échéance.</p></div><button class="primary create" data-type="planned">+ Planifier une dépense</button></div><div id="plannedCards" class="planned-grid"></div></section>
 
         <section id="teachers" class="page"><div class="page-toolbar"><div><h2>Formateurs</h2><p>Suivez les prestations et les montants à régler.</p></div><button class="primary create" data-type="teacher">+ Ajouter un formateur</button></div><div class="teacher-summary"><article><span>Montant total dû</span><strong id="teacherDue">0 FCFA</strong></article><article><span>Formateurs à payer</span><strong id="teacherCount">0</strong></article><article><span>Payé ce mois</span><strong id="teacherPaid">0 FCFA</strong></article></div><div id="teacherCards" class="teacher-grid"></div></section>
+        <section id="permanent-staff" class="page"><div class="page-toolbar"><div><h2>Personnel permanent</h2><p>Suivi confidentiel des salaires, primes et paiements. Ne modifie pas la trésorerie réelle.</p></div><button id="addPermanentStaff" class="primary">+ Ajouter un collaborateur</button></div><div class="staff-controls"><label>Mois suivi<select id="staffMonth"></select></label></div><div class="teacher-summary staff-summary"><article><span>Masse salariale du mois</span><strong id="staffPayroll">0 FCFA</strong></article><article><span>Primes et bonus</span><strong id="staffBonuses">0 FCFA</strong></article><article><span>Reste à suivre</span><strong id="staffPending">0 FCFA</strong></article></div><div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>COLLABORATEUR</th><th>POSTE</th><th>SALAIRE</th><th>PRIMES</th><th>TOTAL DU MOIS</th><th>ÉTAT</th><th></th></tr></thead><tbody id="permanentStaffTable"></tbody></table></div></div></section>
 
         <section id="reports" class="page"><div class="page-toolbar"><div><h2>Rapports financiers</h2><p>Une vue synthétique pour faciliter vos décisions.</p></div><div class="report-actions"><select id="reportPeriod"><option value="day">Aujourd’hui</option><option value="week">Cette semaine</option><option value="month" selected>Ce mois</option><option value="quarter">Ce trimestre</option><option value="semester">Ce semestre</option><option value="year">Cette année</option></select><button class="secondary" id="printReport">⤓ Exporter / imprimer</button></div></div><div id="reportPeriodLabel" class="report-period-label"></div><div class="report-grid"><article class="panel"><h3>Résumé de la période</h3><div id="reportSummary" class="report-summary"></div></article><article class="panel"><h3>Répartition des dépenses</h3><div id="expenseBreakdown" class="breakdown"></div></article></div><article class="panel report-transactions"><div><h3>Transactions de la période</h3><p class="muted">Toutes les entrées et sorties comptabilisées pour la période sélectionnée.</p></div><div class="table-wrap"><table><thead><tr><th>TYPE</th><th>LIBELLÉ</th><th>CATÉGORIE</th><th>DATE</th><th>MODE / STATUT</th><th class="right">MONTANT</th></tr></thead><tbody id="reportTransactions"></tbody></table></div></article></section>
 
@@ -96,6 +98,7 @@
     </div>
 
     <div id="modal" class="modal hidden"><div class="modal-card"><button class="close">×</button><p class="eyebrow green">NOUVELLE OPÉRATION</p><h2 id="modalTitle">Enregistrer une entrée</h2><form id="operationForm"><div id="formFields"></div><div class="form-actions"><button type="button" class="secondary close">Annuler</button><button type="submit" class="primary">Enregistrer</button></div></form></div></div>
+    <div id="staffModal" class="modal hidden"><div class="modal-card"><button type="button" class="close" data-close-staff>×</button><p class="eyebrow green">PERSONNEL PERMANENT</p><h2 id="staffModalTitle">Ajouter un collaborateur</h2><form id="staffForm"><div id="staffFields"></div><div class="form-actions"><button type="button" class="secondary" data-close-staff>Annuler</button><button type="submit" class="primary">Enregistrer</button></div></form></div></div>
     <div id="toast" class="toast hidden"></div>
     <script src="app.js?v=20260902-2"></script>
     <script src="cloud.js?v=20260902-2"></script>
@@ -109,6 +112,7 @@
     <script src="audit-fix.js?v=20260902-2"></script>
     <script src="account-password.js?v=20260902-1"></script>
     <script src="chart-fix.js?v=20260902-1"></script>
+    <script src="permanent-staff.js?v=20260902-1"></script>
     <script>
       (() => { const button=document.querySelector('#mobileMenu'), sidebar=document.querySelector('.sidebar'), backdrop=document.querySelector('#menuBackdrop'); if(!button||!sidebar||!backdrop)return; const close=()=>{sidebar.classList.remove('mobile-open');backdrop.classList.add('hidden');button.setAttribute('aria-expanded','false')}; const open=()=>{sidebar.classList.add('mobile-open');backdrop.classList.remove('hidden');button.setAttribute('aria-expanded','true')}; button.addEventListener('click',()=>sidebar.classList.contains('mobile-open')?close():open());backdrop.addEventListener('click',close);document.querySelector('#nav').addEventListener('click',()=>{if(window.innerWidth<=1020)close()});window.addEventListener('resize',()=>{if(window.innerWidth>1020)close()}); })();
     </script>

@@ -72,7 +72,7 @@
             <article class="stat-card"><div class="card-icon warning">◷</div><p>À payer (7 jours)</p><h2 id="upcomingTotal">0 FCFA</h2><span id="overdueText" class="warning-text"></span></article>
           </div>
           <div class="dashboard-grid">
-            <article class="panel chart-panel"><div class="panel-head"><div><h3>Flux de trésorerie</h3><p>Entrées et sorties des 6 derniers mois</p></div><span class="pill">2026 ▾</span></div><div id="chart" class="bar-chart"></div><div class="legend"><span><i class="legend-income"></i>Entrées</span><span><i class="legend-expense"></i>Sorties</span></div></article>
+            <article class="panel chart-panel"><div class="panel-head"><div><h3>Flux de trésorerie</h3><p id="chartSubtitle">Entrées et sorties des 6 derniers mois</p></div><select id="chartYear" class="pill" aria-label="Année du flux de trésorerie"></select></div><div id="chart" class="bar-chart"></div><div class="legend"><span><i class="legend-income"></i>Entrées</span><span><i class="legend-expense"></i>Sorties</span></div></article>
             <article class="panel upcoming-panel"><div class="panel-head"><div><h3>Échéances proches</h3><p>À traiter prochainement</p></div><button class="text-btn" data-go="planned">Voir tout</button></div><div id="upcomingList" class="compact-list"></div></article>
           </div>
           <article class="panel recent-panel"><div class="panel-head"><div><h3>Dernières opérations</h3><p>Encaissements et décaissements récents</p></div><button class="text-btn" data-go="incomes">Voir tout</button></div><div class="table-wrap"><table><thead><tr><th>OPÉRATION</th><th>CATÉGORIE</th><th>DATE</th><th>STATUT</th><th class="right">MONTANT</th></tr></thead><tbody id="recentTable"></tbody></table></div></article>
@@ -108,6 +108,7 @@
     <script src="reports-fix.js?v=20260902-2"></script>
     <script src="audit-fix.js?v=20260902-2"></script>
     <script src="account-password.js?v=20260902-1"></script>
+    <script src="chart-fix.js?v=20260902-1"></script>
     <script>
       (() => { const button=document.querySelector('#mobileMenu'), sidebar=document.querySelector('.sidebar'), backdrop=document.querySelector('#menuBackdrop'); if(!button||!sidebar||!backdrop)return; const close=()=>{sidebar.classList.remove('mobile-open');backdrop.classList.add('hidden');button.setAttribute('aria-expanded','false')}; const open=()=>{sidebar.classList.add('mobile-open');backdrop.classList.remove('hidden');button.setAttribute('aria-expanded','true')}; button.addEventListener('click',()=>sidebar.classList.contains('mobile-open')?close():open());backdrop.addEventListener('click',close);document.querySelector('#nav').addEventListener('click',()=>{if(window.innerWidth<=1020)close()});window.addEventListener('resize',()=>{if(window.innerWidth>1020)close()}); })();
     </script>

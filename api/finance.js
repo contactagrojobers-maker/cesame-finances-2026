@@ -6,7 +6,7 @@ module.exports=async(req,res)=>{
     if(req.method!=='PUT') return send(res,405,{error:'Méthode non autorisée.'});
     const finance=req.body&&req.body.finance;
     if(!finance || !Array.isArray(finance.incomes)||!Array.isArray(finance.expenses)||!Array.isArray(finance.planned)||!Array.isArray(finance.teachers)) return send(res,400,{error:'Données financières invalides.'});
-    const existing=await state(); finance.permanentStaff=existing.permanentStaff||[]; finance.audit=(finance.audit||[]).slice(0,100);
+    const existing=await state(); finance.permanentStaff=existing.permanentStaff||[]; finance.forecasts=existing.forecasts||[]; finance.audit=(finance.audit||[]).slice(0,100);
     const {error}=await admin().from('app_state').upsert({id:1,document:finance,updated_at:new Date().toISOString(),updated_by:user.id}); if(error) throw error;
     return send(res,200,{finance});
   } catch(error) { return send(res,500,{error:error.message||'Erreur serveur.'}); }

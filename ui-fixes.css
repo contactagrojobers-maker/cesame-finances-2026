@@ -1,4 +1,6 @@
 /* Ajustements ergonomiques. */
 .form-actions .close{position:static;width:auto;height:auto;border-radius:8px;font-size:inherit}
-.reset-data{margin:12px 7px 0;padding:8px 7px;background:transparent;color:#a55d2a;text-align:left;font-size:10px;font-weight:700;border-top:1px solid var(--line)}
+.reset-data{margin:12px 7px 0;padding:8px 7px;background:transparent;color:#a55d2a;text-align:left;font-size:10px;font-weight:700;border-top:1px solid var(--line);flex-shrink:0}
+.sidebar{overflow-y:auto}
+.sidebar-footer{flex-shrink:0}
 #quickAdd{display:none!important}

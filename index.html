@@ -9,7 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="logo.css" />
-    <link rel="stylesheet" href="mobile.css" />
+    <link rel="stylesheet" href="ui-fixes.css" />
+    <style>
+      .mobile-menu{display:none}.header-title{display:flex;align-items:center;gap:11px}.menu-backdrop{display:none}
+      @media(max-width:1020px){.app{display:block}.sidebar{width:min(288px,84vw);transform:translateX(-105%);transition:transform .22s ease;z-index:30;box-shadow:12px 0 36px rgba(11,36,29,.18)}.sidebar.mobile-open{transform:translateX(0)}.menu-backdrop{display:block;position:fixed;inset:0;background:rgba(10,31,25,.42);z-index:25}.mobile-menu{display:grid!important;place-items:center;width:40px;height:40px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--green);font-size:22px;line-height:1}main{margin:0;width:100%;padding:17px 14px 32px}header{gap:10px;margin-bottom:19px}.header-title{min-width:0}header h1{font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.header-actions{gap:7px}.header-actions .primary{font-size:0;width:42px;height:40px;padding:0;display:grid;place-items:center}.header-actions .primary:after{content:'+';font-size:24px;font-weight:500}.header-actions .primary:first-letter{font-size:0}.icon-btn{width:40px;height:40px}.page-toolbar{margin-top:5px}.page-toolbar h2{font-size:21px}.page-toolbar .primary,.page-toolbar .secondary{padding:9px 10px;font-size:10px}.panel{padding:15px;border-radius:11px}.table-panel{padding:0}.table-panel .table-wrap{padding:2px 6px}.filters{padding:12px;display:grid;grid-template-columns:1fr}.filters input,.filters select{max-width:none;width:100%}th,td{white-space:nowrap;padding:12px 8px}.stat-card{min-height:127px;padding:17px}.stat-card h2{font-size:21px;margin:16px 0 7px}.bar-chart{gap:11px;height:190px}.dashboard-grid{margin-bottom:16px}.modal{padding:10px}.modal-card{padding:22px 17px;border-radius:13px}.modal-card h2{font-size:20px}.form-actions{position:sticky;bottom:-22px;background:#fff;padding:13px 0 0}}
+    </style>
   </head>
   <body>
     <div id="loginView" class="login-shell">
@@ -49,7 +53,7 @@
           <button class="nav-link" data-page="audit"><span>◫</span> Historique</button>
           <button id="usersNav" class="nav-link hidden"><span>⚙</span> Utilisateurs</button>
         </nav>
-        <div class="sidebar-footer"><div class="avatar">PM</div><div><strong id="sidebarName">Paul Mbarga</strong><small id="sidebarRole">Promoteur</small></div><button id="logout" title="Déconnexion">↪</button></div>
+        <div class="sidebar-footer"><div class="avatar">PM</div><div><strong id="sidebarName">Paul Mbarga</strong><small id="sidebarRole">Promoteur</small></div><button id="logout" title="Déconnexion">↪</button></div><button id="resetData" class="reset-data hidden">Réinitialiser les données financières</button>
       </aside>
 
       <div id="menuBackdrop" class="menu-backdrop hidden"></div>
@@ -96,6 +100,9 @@
     <script src="operations-fix.js"></script>
     <script src="direct-expense-fix.js"></script>
     <script src="requests.js"></script>
-    <script src="mobile.js"></script>
+    <script src="reset.js"></script>
+    <script>
+      (() => { const button=document.querySelector('#mobileMenu'), sidebar=document.querySelector('.sidebar'), backdrop=document.querySelector('#menuBackdrop'); if(!button||!sidebar||!backdrop)return; const close=()=>{sidebar.classList.remove('mobile-open');backdrop.classList.add('hidden');button.setAttribute('aria-expanded','false')}; const open=()=>{sidebar.classList.add('mobile-open');backdrop.classList.remove('hidden');button.setAttribute('aria-expanded','true')}; button.addEventListener('click',()=>sidebar.classList.contains('mobile-open')?close():open());backdrop.addEventListener('click',close);document.querySelector('#nav').addEventListener('click',()=>{if(window.innerWidth<=1020)close()});window.addEventListener('resize',()=>{if(window.innerWidth>1020)close()}); })();
+    </script>
   </body>
 </html>

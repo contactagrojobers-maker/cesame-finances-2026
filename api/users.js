@@ -1,7 +1,7 @@
 const { admin, send, currentUser } = require('./_lib');
 module.exports=async(req,res)=>{
   try {
-    const actor=await currentUser(req); if(!actor||actor.role!=='Promoteur') return send(res,403,{error:'Seul le Promoteur peut administrer les comptes.'});
+    const actor=await currentUser(req); if(!actor||!['Promoteur','Directeur'].includes(actor.role)) return send(res,403,{error:'Seuls le Promoteur et le Directeur peuvent administrer les comptes.'});
     const db=admin();
     if(req.method==='GET'){const {data,error}=await db.from('profiles').select('id,email,name,role,active,created_at').order('created_at');if(error)throw error;return send(res,200,{users:data});}
     if(req.method==='POST'){

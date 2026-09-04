@@ -102,12 +102,14 @@
     <div id="modal" class="modal hidden"><div class="modal-card"><button class="close">×</button><p class="eyebrow green">NOUVELLE OPÉRATION</p><h2 id="modalTitle">Enregistrer une entrée</h2><form id="operationForm"><div id="formFields"></div><div class="form-actions"><button type="button" class="secondary close">Annuler</button><button type="submit" class="primary">Enregistrer</button></div></form></div></div>
     <div id="staffModal" class="modal hidden"><div class="modal-card"><button type="button" class="close" data-close-staff>×</button><p class="eyebrow green">PERSONNEL PERMANENT</p><h2 id="staffModalTitle">Ajouter un collaborateur</h2><form id="staffForm"><div id="staffFields"></div><div class="form-actions"><button type="button" class="secondary" data-close-staff>Annuler</button><button type="submit" class="primary">Enregistrer</button></div></form></div></div>
     <div id="forecastModal" class="modal hidden"><div class="modal-card"><button type="button" class="close" data-close-forecast>×</button><p class="eyebrow green">PRÉVISIONS FINANCIÈRES</p><h2>Ajouter une prévision</h2><form id="forecastForm"><div class="form-grid"><label class="wide">Libellé<input name="label" required placeholder="Ex. Inscriptions attendues - octobre" /></label><label>Type<select name="kind"><option value="income">Entrée attendue</option><option value="expense">Charge attendue</option></select></label><label>Mois concerné<input name="month" type="month" required /></label><label>Catégorie<input name="category" required placeholder="Ex. Frais de formation" /></label><label>Montant (FCFA)<input name="amount" type="number" min="1" required /></label><label class="wide">Observation<input name="note" placeholder="Hypothèse ou explication" /></label></div><div class="form-actions"><button type="button" class="secondary" data-close-forecast>Annuler</button><button type="submit" class="primary">Enregistrer</button></div></form></div></div>
+    <div id="editOperationModal" class="modal hidden"><div class="modal-card"><button type="button" class="close" data-close-edit-operation>×</button><p class="eyebrow green">CORRECTION D’OPÉRATION</p><h2 id="editOperationTitle">Modifier l’opération</h2><form id="editOperationForm"><div id="editOperationFields"></div><div class="form-actions"><button type="button" class="secondary" data-close-edit-operation>Annuler</button><button type="submit" class="primary">Enregistrer les modifications</button></div></form></div></div>
     <div id="toast" class="toast hidden"></div>
     <script src="app.js?v=20260902-2"></script>
     <script src="cloud.js?v=20260902-2"></script>
     <script src="admin.js?v=20260902-2"></script>
     <script src="admin-fix.js?v=20260902-2"></script>
     <script src="operations-fix.js?v=20260902-2"></script>
+    <script src="edit-operations.js?v=20260904-1"></script>
     <script src="direct-expense-fix.js?v=20260902-2"></script>
     <script src="requests.js?v=20260902-2"></script>
     <script src="reset.js?v=20260902-2"></script>
@@ -117,6 +119,7 @@
     <script src="chart-fix.js?v=20260902-1"></script>
     <script src="permanent-staff.js?v=20260902-1"></script>
     <script src="forecasts.js?v=20260902-1"></script>
+    <script src="scolarite-menu.js?v=20260904-1"></script>
     <script>
       (() => { const button=document.querySelector('#mobileMenu'), sidebar=document.querySelector('.sidebar'), backdrop=document.querySelector('#menuBackdrop'); if(!button||!sidebar||!backdrop)return; const close=()=>{sidebar.classList.remove('mobile-open');backdrop.classList.add('hidden');button.setAttribute('aria-expanded','false')}; const open=()=>{sidebar.classList.add('mobile-open');backdrop.classList.remove('hidden');button.setAttribute('aria-expanded','true')}; button.addEventListener('click',()=>sidebar.classList.contains('mobile-open')?close():open());backdrop.addEventListener('click',close);document.querySelector('#nav').addEventListener('click',()=>{if(window.innerWidth<=1020)close()});window.addEventListener('resize',()=>{if(window.innerWidth>1020)close()}); })();
     </script>

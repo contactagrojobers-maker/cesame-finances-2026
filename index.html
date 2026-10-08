@@ -123,9 +123,9 @@
     <script src="permanent-staff.js?v=20261008-2"></script>
     <script src="forecasts.js?v=20260902-1"></script>
     <script src="scolarite-menu.js?v=20261008-1"></script>
-    <script src="schooling.js?v=20261008-3"></script>
+<script src="schooling.js?v=20261008-4"></script>
     <script src="teaching-modules.js?v=20261008-1"></script>
-    <script src="teacher-contracts.js?v=20261008-1"></script>
+<script src="teacher-contracts.js?v=20261008-2"></script>
     <link rel="stylesheet" href="schooling.css?v=20261008-3" />
     <script>
       (() => { const button=document.querySelector('#mobileMenu'), sidebar=document.querySelector('.sidebar'), backdrop=document.querySelector('#menuBackdrop'); if(!button||!sidebar||!backdrop)return; const close=()=>{sidebar.classList.remove('mobile-open');backdrop.classList.add('hidden');button.setAttribute('aria-expanded','false')}; const open=()=>{sidebar.classList.add('mobile-open');backdrop.classList.remove('hidden');button.setAttribute('aria-expanded','true')}; button.addEventListener('click',()=>sidebar.classList.contains('mobile-open')?close():open());backdrop.addEventListener('click',close);document.querySelector('#nav').addEventListener('click',()=>{if(window.innerWidth<=1020)close()});window.addEventListener('resize',()=>{if(window.innerWidth>1020)close()}); })();

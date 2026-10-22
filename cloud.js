@@ -2,7 +2,8 @@
 let accessToken=sessionStorage.getItem('cesame-token');
 let lastServerState=''; let syncing=false; let queuedSync=false;
 const normalizeFinance=finance=>({...finance,requests:Array.isArray(finance.requests)?finance.requests:[],schooling:finance.schooling&&typeof finance.schooling==='object'?finance.schooling:{specialties:[],learners:[],payments:[]},trainingModules:Array.isArray(finance.trainingModules)?finance.trainingModules:[]});
-const financialPayload=()=>({incomes:data.incomes,expenses:data.expenses,planned:data.planned,teachers:data.teachers,requests:data.requests||[],audit:data.audit,schooling:data.schooling||{specialties:[],learners:[],payments:[]},trainingModules:data.trainingModules||[]});
+const removeUniformPaymentsFromCash=()=>{const ids=new Set((data.schooling?.payments||[]).filter(item=>item.kind==='uniform'&&item.financeIncomeId).map(item=>item.financeIncomeId));if(ids.size)data.incomes=data.incomes.filter(item=>!ids.has(item.id));};
+const financialPayload=()=>{removeUniformPaymentsFromCash();return {incomes:data.incomes,expenses:data.expenses,planned:data.planned,teachers:data.teachers,requests:data.requests||[],audit:data.audit,schooling:data.schooling||{specialties:[],learners:[],payments:[]},trainingModules:data.trainingModules||[]};};
 const financialSnapshot=()=>JSON.stringify(financialPayload());
 const api=async(path,options={})=>{const response=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(accessToken?{Authorization:`Bearer ${accessToken}`}:{}),...(options.headers||{})}});const raw=await response.text();let body={};try{body=raw?JSON.parse(raw):{}}catch{throw Error('Le service de connexion est introuvable. Vérifiez le dossier api et la configuration Vercel.');}if(!response.ok)throw Error(body.error||'Une erreur est survenue.');return body;};
 async function syncNow(){

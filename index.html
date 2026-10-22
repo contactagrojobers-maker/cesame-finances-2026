@@ -83,7 +83,7 @@
 
         <section id="incomes" class="page"><div class="page-toolbar"><div><h2>Entrées</h2><p>Suivez tous les encaissements du centre.</p></div><button class="primary create" data-type="income">+ Enregistrer une entrée</button></div><div class="panel table-panel"><div class="filters"><input id="incomeSearch" placeholder="Rechercher une opération…" /><select id="incomeFilter"><option value="all">Toutes les catégories</option></select></div><div class="table-wrap"><table><thead><tr><th>RÉFÉRENCE</th><th>LIBELLÉ</th><th>CATÉGORIE</th><th>DATE</th><th>MODE</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="incomeTable"></tbody></table></div></div></section>
 
-        <section id="expenses" class="page"><div class="page-toolbar"><div><h2>Sorties</h2><p>Dépenses payées et en attente de validation.</p></div><button class="primary create" data-type="expense">+ Enregistrer une sortie</button></div><div id="expenseAnalytics"></div><div class="panel table-panel"><div class="filters"><input id="expenseSearch" placeholder="Rechercher une dépense…" /><select id="expenseStatus"><option value="all">Tous les statuts</option><option value="payée">Payée</option><option value="à valider">À valider</option><option value="rejetée">Rejetée</option></select></div><div class="table-wrap"><table><thead><tr><th>DÉPENSE</th><th>CATÉGORIE</th><th>DATE</th><th>STATUT</th><th>VALIDÉE PAR</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="expenseTable"></tbody></table></div></div></section>
+        <section id="expenses" class="page"><div class="page-toolbar"><div><h2>Sorties</h2><p>Dépenses payées et en attente de validation.</p></div><button class="primary create" data-type="expense">+ Enregistrer une sortie</button></div><div id="expenseAnalytics"></div><div class="panel table-panel"><div class="filters"><input id="expenseSearch" placeholder="Rechercher une dépense…" /><select id="expenseStatus"><option value="all">Tous les statuts</option><option value="payée">Payée</option><option value="à valider">À valider</option><option value="rejetée">Rejetée</option></select><select id="expenseOrder"><option value="date">Plus récentes d’abord</option><option value="amount">Plus coûteuses d’abord</option></select></div><div class="table-wrap"><table><thead><tr><th>DÉPENSE</th><th>CATÉGORIE</th><th>DATE</th><th>STATUT</th><th>VALIDÉE PAR</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="expenseTable"></tbody></table></div></div></section>
         <section id="requests" class="page"><div class="page-toolbar"><div><h2>Demandes de dépenses</h2><p>Demandes à examiner avant qu’elles deviennent une sortie.</p></div><button id="createRequest" class="primary">+ Nouvelle demande</button></div><div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>DEMANDE</th><th>CATÉGORIE</th><th>DEMANDÉE PAR</th><th>DATE</th><th>STATUT</th><th class="right">MONTANT</th><th></th></tr></thead><tbody id="requestsTable"></tbody></table></div></div></section>
 
         <section id="planned" class="page"><div class="page-toolbar"><div><h2>Dépenses planifiées</h2><p>Anticipez les charges et ne ratez aucune échéance.</p></div><button class="primary create" data-type="planned">+ Planifier une dépense</button></div><div id="plannedCards" class="planned-grid"></div></section>
@@ -108,10 +108,11 @@
     <div id="schoolingModal" class="modal hidden"><div class="modal-card"><button type="button" class="close" data-close-schooling>×</button><p class="eyebrow green">SCOLARITÉ</p><h2 id="schoolingModalTitle">Scolarité</h2><form id="schoolingForm"><div id="schoolingFields"></div><div class="form-actions"><button type="button" class="secondary" data-close-schooling>Annuler</button><button type="submit" class="primary">Enregistrer</button></div></form></div></div>
     <div id="toast" class="toast hidden"></div>
     <script src="app.js?v=20260902-2"></script>
-    <script src="cloud.js?v=20261022-1"></script>
+    <script src="cloud.js?v=20261022-2"></script>
     <script src="admin.js?v=20260902-2"></script>
     <script src="admin-fix.js?v=20260902-2"></script>
     <script src="operations-fix.js?v=20260902-2"></script>
+    <script src="expense-controls.js?v=20261022-1"></script>
     <script src="edit-operations.js?v=20260904-1"></script>
     <script src="direct-expense-fix.js?v=20260902-2"></script>
     <script src="requests.js?v=20260902-2"></script>
@@ -123,10 +124,11 @@
     <script src="permanent-staff.js?v=20261008-2"></script>
     <script src="forecasts.js?v=20260902-1"></script>
     <script src="scolarite-menu.js?v=20261008-1"></script>
-<script src="schooling.js?v=20261022-1"></script>
+<script src="schooling.js?v=20261022-2"></script>
     <script src="teaching-modules.js?v=20261008-1"></script>
 <script src="teacher-contracts.js?v=20261008-2"></script>
     <script src="expense-analytics.js?v=20261022-1"></script>
+    <script src="expense-sort.js?v=20261022-1"></script>
     <link rel="stylesheet" href="schooling.css?v=20261022-1" />
     <script>
       (() => { const button=document.querySelector('#mobileMenu'), sidebar=document.querySelector('.sidebar'), backdrop=document.querySelector('#menuBackdrop'); if(!button||!sidebar||!backdrop)return; const close=()=>{sidebar.classList.remove('mobile-open');backdrop.classList.add('hidden');button.setAttribute('aria-expanded','false')}; const open=()=>{sidebar.classList.add('mobile-open');backdrop.classList.remove('hidden');button.setAttribute('aria-expanded','true')}; button.addEventListener('click',()=>sidebar.classList.contains('mobile-open')?close():open());backdrop.addEventListener('click',close);document.querySelector('#nav').addEventListener('click',()=>{if(window.innerWidth<=1020)close()});window.addEventListener('resize',()=>{if(window.innerWidth>1020)close()}); })();

@@ -1,11 +1,30 @@
 /* Connexion, sauvegarde immédiate et actualisation multi-utilisateur. */
 let accessToken=sessionStorage.getItem('cesame-token');
-let lastServerState=''; let syncing=false;
+let lastServerState=''; let syncing=false; let queuedSync=false;
 const normalizeFinance=finance=>({...finance,requests:Array.isArray(finance.requests)?finance.requests:[],schooling:finance.schooling&&typeof finance.schooling==='object'?finance.schooling:{specialties:[],learners:[],payments:[]},trainingModules:Array.isArray(finance.trainingModules)?finance.trainingModules:[]});
 const financialPayload=()=>({incomes:data.incomes,expenses:data.expenses,planned:data.planned,teachers:data.teachers,requests:data.requests||[],audit:data.audit,schooling:data.schooling||{specialties:[],learners:[],payments:[]},trainingModules:data.trainingModules||[]});
 const financialSnapshot=()=>JSON.stringify(financialPayload());
 const api=async(path,options={})=>{const response=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(accessToken?{Authorization:`Bearer ${accessToken}`}:{}),...(options.headers||{})}});const raw=await response.text();let body={};try{body=raw?JSON.parse(raw):{}}catch{throw Error('Le service de connexion est introuvable. Vérifiez le dossier api et la configuration Vercel.');}if(!response.ok)throw Error(body.error||'Une erreur est survenue.');return body;};
-async function syncNow(){if(!accessToken||syncing)return;const snapshot=financialSnapshot();if(snapshot===lastServerState)return;syncing=true;try{const result=await api('/api/finance',{method:'PUT',body:JSON.stringify({finance:financialPayload()})});data={...normalizeFinance(result.finance),user:data.user};save();lastServerState=financialSnapshot();}catch(error){toast(`Sauvegarde impossible : ${error.message}`)}finally{syncing=false;}}
+async function syncNow(){
+  if(!accessToken)return;
+  if(syncing){queuedSync=true;return;}
+  const snapshot=financialSnapshot();
+  if(snapshot===lastServerState)return;
+  syncing=true;
+  try{
+    const result=await api('/api/finance',{method:'PUT',body:JSON.stringify({finance:financialPayload()})});
+    /* Ne jamais remplacer une modification faite pendant l'envoi précédent. */
+    if(financialSnapshot()===snapshot){
+      data={...normalizeFinance(result.finance),user:data.user};
+      save();
+      lastServerState=financialSnapshot();
+    }else{
+      lastServerState=snapshot;
+      queuedSync=true;
+    }
+  }catch(error){toast(`Sauvegarde impossible : ${error.message}`);}
+  finally{syncing=false;if(queuedSync){queuedSync=false;setTimeout(syncNow,0);}}
+}
 document.querySelector('#loginForm').addEventListener('submit',async event=>{event.preventDefault();event.stopImmediatePropagation();const button=event.currentTarget.querySelector('button[type="submit"]');button.disabled=true;button.textContent='Connexion…';try{const result=await api('/api/login',{method:'POST',body:JSON.stringify({email:document.querySelector('#email').value,password:event.currentTarget.querySelector('input[type="password"]').value})});accessToken=result.token;sessionStorage.setItem('cesame-token',accessToken);data={...normalizeFinance(result.finance),user:result.user};save();lastServerState=financialSnapshot();document.querySelector('#usersNav').classList.toggle('hidden',result.user.role!=='Promoteur');document.querySelector('#resetData').classList.toggle('hidden',!['Promoteur','Directeur'].includes(result.user.role));document.querySelector('#loginView').classList.add('hidden');document.querySelector('#appView').classList.remove('hidden');renderAll();}catch(error){toast(error.message)}finally{button.disabled=false;button.innerHTML='Se connecter <span>→</span>';}} ,{capture:true});
 document.querySelector('#logout').addEventListener('click',()=>{accessToken='';sessionStorage.removeItem('cesame-token');},{capture:true});
 document.querySelector('#operationForm').addEventListener('submit',event=>{if(!event.currentTarget.dataset.admin&&!event.currentTarget.dataset.request)setTimeout(syncNow,0);});
